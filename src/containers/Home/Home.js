@@ -6,7 +6,11 @@ import EventsList from '../../components/EventsList/EventsList';
 
 class Home extends React.Component {
   componentDidMount() {
-    this.props.loadEvents();
+    this.props.loadEvents({
+      location: 'Toronto',
+      date: 'Future',
+      page_size: '100',
+    });
   }
 
   render() {
