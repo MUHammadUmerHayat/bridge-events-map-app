@@ -11,10 +11,10 @@ function getEvent(details) {
   };
 }
 
-export function loadEventDetails() {
-  return function loadEventDetailsPlz(dispatch) {
-    get('events/get', { id: 'P0-001-001578572-4' })
-      .then(function getResp(response) {
+export function loadEventDetails(idParam) {
+  return dispatch => {
+    get('events/get', { id: idParam })
+      .then(response => {
         dispatch(getEvent(response));
         return response;
       })

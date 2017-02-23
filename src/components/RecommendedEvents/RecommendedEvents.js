@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RecommendedEvents = (props) => {
+export default function RecommendedEvents(props) {
   return (
     <div>
     	<hr />
@@ -14,11 +14,9 @@ const RecommendedEvents = (props) => {
       </ul>
     </div>
   );
-};
+}
 
 RecommendedEvents.propTypes = {
   events: React.PropTypes.array,
   event: React.PropTypes.object,
 };
-
-export default RecommendedEvents;
