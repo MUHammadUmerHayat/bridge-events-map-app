@@ -49,7 +49,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadEventDetails,
-  // loadRecommendedEvents,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetails);
