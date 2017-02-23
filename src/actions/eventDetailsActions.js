@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import {get} from '../api/request';
-
+import { loadRecommendedEvents } from './eventActions';
 
 function getEvent(details) {
   return {
@@ -16,7 +16,13 @@ export function loadEventDetails(idParam) {
     get('events/get', { id: idParam })
       .then(response => {
         dispatch(getEvent(response));
-      }).catch(error => {
+        return response;
+      })
+      .then(function getResp(response) {
+        dispatch(loadRecommendedEvents(response.city));
+        return response;
+      })
+      .catch(error => {
         throw (error);
       });
   };
