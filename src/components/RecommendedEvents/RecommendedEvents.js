@@ -5,13 +5,16 @@ export default function RecommendedEvents(props) {
     <div>
     	<hr />
     	<h2>You might also be interested in...</h2>
-      <ul>
+      <div>
         {props.events.map((event, i) => {
+          console.log(event);
           return (
-          	<li key={i}>{event.title}</li>
+          	<p key={i}>
+              {event.title} @ {event.venue_name}
+            </p>
           );
         })}
-      </ul>
+        </div>
     </div>
   );
 }
