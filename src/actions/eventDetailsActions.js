@@ -13,14 +13,16 @@ function getEvent(details) {
 
 export function loadEventDetails() {
   return function loadEventDetailsPlz(dispatch) {
-    get('events/get', { id: 'E0-001-000278174-6' })
+    get('events/get', { id: 'P0-001-001578572-4' })
       .then(function getResp(response) {
         dispatch(getEvent(response));
         return response;
-      }).then(function getRecommended(response) {
-        console.log(response.city);
-        return loadRecommendedEvents(response.city);
-      }).catch(error => {
+      })
+      .then(function getResp(response) {
+        dispatch(loadRecommendedEvents(response.city));
+        return response;
+      })
+      .catch(error => {
         throw (error);
       });
   };

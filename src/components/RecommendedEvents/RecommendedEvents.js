@@ -1,12 +1,24 @@
 import React from 'react';
 
-export default class RecommendedEvents extends React.Component {
-  render() {
-  	// console.log('fdfdf', this.props);
-    return (
+const RecommendedEvents = (props) => {
+  return (
+    <div>
+    	<hr />
+    	<h2>You might also be interested in...</h2>
       <ul>
-        hi
+        {props.events.map((event, i) => {
+          return (
+          	<li key={i}>{event.title}</li>
+          );
+        })}
       </ul>
-    );
-  }
-}
+    </div>
+  );
+};
+
+RecommendedEvents.propTypes = {
+  events: React.PropTypes.array,
+  event: React.PropTypes.object,
+};
+
+export default RecommendedEvents;

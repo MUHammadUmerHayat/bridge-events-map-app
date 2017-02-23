@@ -22,10 +22,9 @@ export function loadEvents() {
   };
 }
 
-export function loadRecommendedEvents(keyword) {
+export function loadRecommendedEvents(city) {
   return function loadAllRecommendedEvents(dispatch) {
-    console.log('HIIIIIIII');
-    get('events/search', { location: keyword })
+    get('events/search', { location: city, page_size: 3 })
       .then(function getResp(response) {
         dispatch(loadEventsSuccess(response.events));
       }).catch(error => {

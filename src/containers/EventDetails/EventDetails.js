@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { loadEventDetails } from '../../actions/eventDetailsActions';
-// import { loadRecommendedEvents } from '../../actions/eventActions';
 import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEvents';
 
 class EventDetails extends Component {
@@ -11,25 +10,28 @@ class EventDetails extends Component {
   }
 
   render() {
+    let recommended = null;
+    if (this.props.events) {
+      recommended = <RecommendedEvents events={this.props.events} />;
+    }
     return (
       <div>
         THIS IS WHERE THE DETAILS GO
         <h1> Title: {this.props.details.title} </h1>
         <p> City: {this.props.details.city} </p>
-        <RecommendedEvents recommended={this.props.events} />
+        {recommended}
       </div>
     );
   }
-
 }
 
 EventDetails.propTypes = {
   loadEventDetails: React.PropTypes.func,
+  loadRecommendedEvents: React.PropTypes.func,
   details: React.PropTypes.shape({
     city: React.PropTypes.string,
     title: React.PropTypes.string,
   }),
-  // loadRecommendedEvents: React.PropTypes.func,
   events: React.PropTypes.array,
 };
 
