@@ -1,8 +1,7 @@
 import React from 'react';
 import MainGoogleMap from '../MainGoogleMap/MainGoogleMap';
 
-
-export default function EventsMap({markers, currentLocation}) {
+export default function EventsMap({markers, currentLocation, handleMarkerClick}) {
   return (
     <div style={{width: '100%', height: '100%'}}>
       <MainGoogleMap
@@ -10,6 +9,7 @@ export default function EventsMap({markers, currentLocation}) {
         mapElement={<div style={{ height: '600px' }} />}
         markers={markers}
         currentLocation={currentLocation}
+        onMarkerClick={handleMarkerClick}
       />
     </div>
   );
@@ -18,4 +18,5 @@ export default function EventsMap({markers, currentLocation}) {
 EventsMap.propTypes = {
   markers: React.PropTypes.array,
   currentLocation: React.PropTypes.object,
+  handleMarkerClick: React.PropTypes.func,
 };
