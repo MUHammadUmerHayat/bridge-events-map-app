@@ -4,6 +4,7 @@ import { loadEvents } from '../../actions/eventActions';
 import { getCurrentGeoLocation } from '../../actions/geolocationActions';
 import EventsMap from '../../components/EventsMap/EventsMap';
 import EventsList from '../../components/EventsList/EventsList';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class Home extends React.Component {
   componentDidMount() {
@@ -33,7 +34,14 @@ class Home extends React.Component {
       </div>
       );
     }
-    return null;
+    return (
+      <div style={{background: '#EEEEEE', position: 'absolute', top: '0', bottom: '0', left: '0', right: '0'}}>
+        <div style={{textAlign: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>
+          <CircularProgress size={250} thickness={5} />
+          <h3 style={{color: '#9E9E9E'}}>LOADING</h3>
+        </div>
+    </div>
+    );
   }
 }
 
