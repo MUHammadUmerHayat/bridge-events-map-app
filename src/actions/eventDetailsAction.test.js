@@ -6,7 +6,7 @@ describe('actions', () => {
     const response = { title: 'Mariah Carey', city: 'Toronto'};
     const expectedAction = {
       type: types.ACTION_TYPES.LOAD_EVENT_DETAILS,
-      payload: { details: {title: 'Mariah Carey', city: 'Toronto'}};
+      payload: { details: {title: 'Mariah Carey', city: 'Toronto'}},
     };
     expect(actions.getEvent(response)).toEqual(expectedAction);
   });
