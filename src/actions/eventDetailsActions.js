@@ -15,6 +15,7 @@ export function loadEventDetails(idParam) {
   return dispatch => {
     get('events/get', { id: idParam })
       .then(response => {
+        console.log('hhhhhhhhh', response);
         dispatch(getEvent(response));
         return response;
       })
@@ -22,8 +23,10 @@ export function loadEventDetails(idParam) {
         dispatch(loadEvents(
           {
             location: response.city,
-            category: response.categories.category[0].id,
+            // category: response.categories.category[0].id,
+            category: 'movies_film',
             page_size: 3,
+            image_sizes: 'perspectivecrop290by250',
           }));
         return response;
       })
