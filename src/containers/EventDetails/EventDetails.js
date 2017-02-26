@@ -11,6 +11,16 @@ class EventDetails extends Component {
     this.props.loadEventDetails(this.props.params.id);
   }
 
+  /* I need this function for React router links. When clicking on a links
+     the page is rerendered but componentDidMount is not called. Use componentWillReceiveProps
+     to call loadEventDetails if a different event has been chosen*/
+  componentWillReceiveProps(nextProps) {
+    const nextAccountId = nextProps.params.id;
+    if (nextAccountId !== this.props.params.id) {
+      this.props.loadEventDetails(nextProps.params.id);
+    }
+  }
+
   render() {
     let recommended = null;
     if (this.props.events) {
@@ -19,8 +29,9 @@ class EventDetails extends Component {
     if (this.props.details) {
       return (
         <div>
-          <EventDetailsComponent title={this.props.details.title}
-            city={this.props.details.city} />
+          <EventDetailsComponent
+            title={this.props.details.title}
+            city={this.props.details.city}
           {recommended}
         </div>
       );
