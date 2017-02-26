@@ -32,6 +32,7 @@ class EventDetails extends Component {
           <EventDetailsComponent
             title={this.props.details.title}
             city={this.props.details.city}
+          />
           {recommended}
         </div>
       );
