@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { loadEvents } from '../../actions/eventActions';
 import { getCurrentGeoLocation } from '../../actions/geolocationActions';
+import { getMarkersList, handleMarkerClick } from '../../actions/markersActions';
 import EventsMap from '../../components/EventsMap/EventsMap';
 import EventsList from '../../components/EventsList/EventsList';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -23,13 +24,17 @@ class Home extends React.Component {
         page_size: '100',
       });
     }
+
+    if (this.props.events !== nextProps.events) {
+      this.props.getMarkersList(nextProps.events);
+    }
   }
 
   render() {
     if (this.props.events) {
       return (
         <div>
-        <EventsMap markers={this.props.markers} currentLocation={this.props.currentLocation}/>
+        <EventsMap markers={this.props.markers} currentLocation={this.props.currentLocation} handleMarkerClick={this.props.handleMarkerClick}/>
         <EventsList events={this.props.events} />
       </div>
       );
@@ -51,31 +56,15 @@ Home.propTypes = {
   loadEvents: React.PropTypes.func.isRequired,
   getCurrentGeoLocation: React.PropTypes.func.isRequired,
   currentLocation: React.PropTypes.object,
+  getMarkersList: React.PropTypes.func.isRequired,
+  handleMarkerClick: React.PropTypes.func.isRequired,
 };
 
-const getFormattedMarkers = (events) => {
-  const markers = events.map((event, index)=> {
-    return {
-      position: {
-        lat: Number(event.latitude),
-        lng: Number(event.longitude),
-      },
-      key: index,
-      defaultAnimation: 2,
-    };
-  });
-  return markers;
-};
 
 const mapStateToProps = state => {
-  let formattedEvents = [];
-  if (Object.keys(state.events).length !== 0 && state.events.constructor === Object) {
-    formattedEvents = getFormattedMarkers(state.events.event);
-  }
-
   return {
     events: state.events.event,
-    markers: formattedEvents,
+    markers: state.markers,
     currentLocation: state.currentLocation,
   };
 };
@@ -83,6 +72,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   loadEvents,
   getCurrentGeoLocation,
+  getMarkersList,
+  handleMarkerClick,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
