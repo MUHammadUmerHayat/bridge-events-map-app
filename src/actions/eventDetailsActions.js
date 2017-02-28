@@ -15,6 +15,7 @@ export function loadEventDetails(idParam) {
   return dispatch => {
     get('events/get', { id: idParam })
       .then(response => {
+        console.log(response);
         dispatch(getEvent(response));
         return response;
       })

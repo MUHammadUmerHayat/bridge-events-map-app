@@ -24,7 +24,7 @@ export function loadEvents(param) {
           event.image.perspectivecrop290by250.url :
           event.image = {
             perspectivecrop290by250: {
-              url: '../../src/assets/img/' + param.category + '.jpg',
+              url: '../../src/assets/img/' + param.categories[0] + '.jpg',
             },
           };
       });

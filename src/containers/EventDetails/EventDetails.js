@@ -14,11 +14,11 @@ class EventDetails extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.details !== nextProps.details) {
-      // console.log(nextProps.details.categories.category[0].id);
       this.props.loadEvents({
         location: nextProps.details.city,
         page_size: 3,
         categories: nextProps.details.categories.category.map(cat => cat.id),
+        venue_id: nextProps.details.venue_id,
       });
     }
   }
@@ -52,6 +52,7 @@ EventDetails.propTypes = {
     city: React.PropTypes.string,
     title: React.PropTypes.string,
     categories: React.PropTypes.obj,
+    venue_id: React.PropTypes.string,
   }),
   events: React.PropTypes.array,
 };

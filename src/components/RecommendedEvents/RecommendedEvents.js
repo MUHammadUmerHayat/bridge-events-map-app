@@ -38,12 +38,14 @@ const styles = {
     flexWrap: 'nowrap',
     overflowX: 'auto',
     overflowY: 'hidden',
+    height: '250px',
   },
   titleStyle: {
     color: '#fff',
   },
   imageStyle: {
     border: '1px solid #eee',
+    height: '250px',
   },
   pStyle: {
     marginRight: '20px',
