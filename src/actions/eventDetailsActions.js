@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import {get} from '../api/request';
-// import { loadEvents } from './eventActions';
+
 
 export function getEvent(details) {
   return {

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { loadEventDetails } from '../../actions/eventDetailsActions';
 import { loadEvents } from '../../actions/eventActions';
-import { getEventImage } from '../../actions/eventImageActions';
 import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEvents';
 import EventDetailsComponent from '../../components/EventDetails/EventDetailsComponent';
 
@@ -15,14 +14,12 @@ class EventDetails extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.details !== nextProps.details) {
+      // console.log(nextProps.details.categories.category[0].id);
       this.props.loadEvents({
         location: nextProps.details.city,
         page_size: 3,
-        image_sizes: 'perspectivecrop290by250',
+        categories: nextProps.details.categories.category.map(cat => cat.id),
       });
-    }
-    if (this.props.events !== nextProps.events) {
-      this.props.getEventImage(nextProps.events);
     }
   }
 
@@ -51,10 +48,10 @@ EventDetails.propTypes = {
   loadEventDetails: React.PropTypes.func,
   loadEvents: React.PropTypes.func,
   loadRecommendedEvents: React.PropTypes.func,
-  getEventImage: React.PropTypes.func,
   details: React.PropTypes.shape({
     city: React.PropTypes.string,
     title: React.PropTypes.string,
+    categories: React.PropTypes.obj,
   }),
   events: React.PropTypes.array,
 };
@@ -67,7 +64,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadEvents,
   loadEventDetails,
-  getEventImage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetails);
