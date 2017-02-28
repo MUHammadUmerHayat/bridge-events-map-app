@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function EventsList({events}) {
-  const titleList = events.map( (element) => (<li>{element.title}</li>) );
+  const titleList = events.map( (element) => (<li key={element.id}>{element.title}</li>) );
   return (
     <div>
       <h1>Event List</h1>
