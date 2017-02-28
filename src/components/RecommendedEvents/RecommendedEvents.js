@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 export default function RecommendedEvents(props) {
   return (
@@ -10,7 +11,9 @@ export default function RecommendedEvents(props) {
           console.log(event);
           return (
           	<p key={i}>
-              {event.title} @ {event.venue_name}
+              <Link to={'/EventDetails/' + event.id} >
+                {event.title} @ {event.venue_name}
+              </Link>
             </p>
           );
         })}
