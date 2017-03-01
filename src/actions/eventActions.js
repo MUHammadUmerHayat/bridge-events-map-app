@@ -16,7 +16,7 @@ export function loadEvents(param) {
     image_sizes: 'perspectivecrop290by250',
   };
   return function loadAllEvents(dispatch) {
-    console.log(param.categories);
+    console.log(param);
     get('events/search', Object.assign({}, param, imageSizes))
     .then(response => {
       response.events.event.map(event => {
@@ -24,7 +24,7 @@ export function loadEvents(param) {
           event.image.perspectivecrop290by250.url :
           event.image = {
             perspectivecrop290by250: {
-              url: '../../src/assets/img/' + param.categories[0] + '.jpg',
+              url: '../../src/assets/img/' + param.category + '.jpg',
             },
           };
       });
