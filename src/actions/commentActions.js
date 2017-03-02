@@ -8,3 +8,12 @@ export function addComment(comment) {
     },
   };
 }
+
+export function loadComments(comments) {
+  return {
+    type: types.ACTION_TYPES.LOAD_COMMENTS,
+    payload: {
+      comments,
+    },
+  };
+}

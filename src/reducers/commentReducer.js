@@ -6,6 +6,9 @@ export default function commentReducer(state = [], action) {
   case types.ACTION_TYPES.ADD_COMMENT:
     return [...state, action.payload.comment];
 
+  case types.ACTION_TYPES.LOAD_COMMENTS:
+    return [...state, action.payload.comments];
+
   default:
     return state;
   }

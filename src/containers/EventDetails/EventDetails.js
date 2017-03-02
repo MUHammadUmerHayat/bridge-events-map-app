@@ -5,6 +5,7 @@ import { loadEvents } from '../../actions/eventActions';
 import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEvents';
 import EventDetailsComponent from '../../components/EventDetails/EventDetailsComponent';
 import CommentForm from '../../components/CommentForm/CommentForm';
+import CommentList from '../../components/CommentList/CommentList';
 import { addComment } from '../../actions/commentActions';
 
 class EventDetails extends Component {
@@ -51,6 +52,7 @@ class EventDetails extends Component {
             city={this.props.details.city}
           />
           <CommentForm handleAddComment={ handleCommentSubmit }/>
+          <CommentList comments={this.props.comments}/>
           {recommended}
         </div>
       );
@@ -76,6 +78,7 @@ EventDetails.propTypes = {
   addComment: React.PropTypes.func.isRequired,
   commentForm: React.PropTypes.object,
   resetForm: React.PropTypes.func,
+  comments: React.PropTypes.array,
 };
 
 const mapStateToProps = state => ({
