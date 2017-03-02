@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
+// const validate = values => {
+//   const errors = {}
+//   if (!values.query) {
+//     errors.query = 'Enter search'
+//   } else if (values.query.length < 2) {
+//     errors.query = 'Must have at least 2 characters to search'
+//   }
+//   return errors;
+// }
+
 class SearchForm extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="searchQuery">Search for events</label><br />
-          <Field name="searchQuery" component="input" type="text"/>
+          <label htmlFor="query">Search for events</label><br />
+          <Field name="query" component="input" type="text"/>
         </div>
         <button type="submit">Submit</button>
       </form>

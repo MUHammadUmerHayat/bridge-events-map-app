@@ -1,60 +1,53 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { newSearch } from '../../actions/searchActions';
 import { loadEvents } from '../../actions/eventActions';
 
 import SearchForm from '../../components/SearchForm';
-// import EventsList from '../../components/EventsList/EventsList';
+import EventsList from '../../components/EventsList/EventsList';
 
 class Search extends Component {
-  // componentDidMount() {
-  //   this.props.loadEvents({
-  //     location: 'Toronto',
-  //     page_size: '10',
-  //     keywords: 'film',
-  //   });
-  // }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props.events);
-    console.log(nextProps.events);
-  }
-
-  componentDidUpdate() {
-    this.props.loadEvents({
-      location: 'Toronto',
-      page_size: '10',
-      keywords: 'music',
-    });
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   render() {
     return (
       <div>
         <SearchForm onSubmit={this.handleSubmit} />
-        {(this.props.events) ? 'there are events' : 'no events'}
+        {(this.props.events) ? <EventsList events={this.props.events} /> : ''}
       </div>
     );
   }
 
   handleSubmit(values) {
-    console.log(values.searchQuery);
+    this.props.newSearch(values.query);
+    this.props.loadEvents({
+      location: 'Toronto',
+      page_size: '10',
+      keywords: values.query,
+    });
   }
 }
 
 Search.propTypes = {
   events: React.PropTypes.array,
+  newSearch: React.PropTypes.func,
   loadEvents: React.PropTypes.func,
   handleSubmit: React.PropTypes.func,
 };
 
 const mapStateToProps = state => {
   return {
+    query: state.query,
     events: state.events.event,
   };
 };
 
 const mapDispatchToProps = {
+  newSearch,
   loadEvents,
 };
 
