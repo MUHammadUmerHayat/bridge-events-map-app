@@ -4,6 +4,9 @@ import { loadEventDetails } from '../../actions/eventDetailsActions';
 import { loadEvents } from '../../actions/eventActions';
 import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEvents';
 import EventDetailsComponent from '../../components/EventDetails/EventDetailsComponent';
+import CommentForm from '../../components/CommentForm/CommentForm';
+import CommentList from '../../components/CommentList/CommentList';
+import { addComment } from '../../actions/commentActions';
 
 class EventDetails extends Component {
 
@@ -31,6 +34,12 @@ class EventDetails extends Component {
   }
 
   render() {
+    const { commentForm } = this.props;
+    const handleCommentSubmit = e => {
+      e.preventDefault();
+      this.props.addComment(commentForm.values.commentTextarea);
+      commentForm.values.commentTextarea = '';
+    };
     let recommended = null;
     if (this.props.events) {
       recommended = <RecommendedEvents events={this.props.events} />;
@@ -42,6 +51,8 @@ class EventDetails extends Component {
             title={this.props.details.title}
             city={this.props.details.city}
           />
+          <CommentForm handleAddComment={ handleCommentSubmit }/>
+          <CommentList comments={this.props.comments}/>
           {recommended}
         </div>
       );
@@ -64,16 +75,23 @@ EventDetails.propTypes = {
     venue_id: React.PropTypes.string,
   }),
   events: React.PropTypes.array,
+  addComment: React.PropTypes.func.isRequired,
+  commentForm: React.PropTypes.object,
+  resetForm: React.PropTypes.func,
+  comments: React.PropTypes.array,
 };
 
 const mapStateToProps = state => ({
   details: state.details,
   events: state.events.event,
+  comments: state.comments,
+  commentForm: state.form.comment,
 });
 
 const mapDispatchToProps = {
   loadEvents,
   loadEventDetails,
+  addComment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetails);
