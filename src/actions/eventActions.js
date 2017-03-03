@@ -10,7 +10,17 @@ export function loadEventsSuccess(events) {
   };
 }
 
-export function loadEvents(param) {
+export function loadRecommendedEventsSuccess(events) {
+  return {
+    type: types.ACTION_TYPES.LOAD_RECOMMENDED_EVENTS_SUCCESS,
+    payload: {
+      events,
+    },
+  };
+}
+
+
+export function loadEvents(param, isRecommended = false) {
   // add image sizes you would like to have access to here
   const imageSizes = {
     image_sizes: 'perspectivecrop290by250',
@@ -27,7 +37,7 @@ export function loadEvents(param) {
             },
           };
       });
-      dispatch(loadEventsSuccess(response.events));
+      dispatch(isRecommended ? loadRecommendedEventsSuccess(response.events) : loadEventsSuccess(response.events));
     }).catch(error => {
       throw (error);
     });
