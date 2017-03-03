@@ -6,7 +6,7 @@ export default function EventsList({events}) {
       <Link to={'/EventDetails/' + element.id}>
         <li>{element.title}</li>
       </Link>
-  ) );
+  ));
   return (
     <div>
       <h1>Event List</h1>
