@@ -25,7 +25,7 @@ class Search extends Component {
   handleSubmit(values) {
     this.props.newSearch(values.query);
     this.props.loadEvents({
-      location: 'Toronto',
+      location: values.location,
       page_size: '10',
       keywords: values.query,
     });

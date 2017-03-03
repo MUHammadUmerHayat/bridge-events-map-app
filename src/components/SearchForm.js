@@ -18,7 +18,8 @@ class SearchForm extends Component {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="query">Search for events</label><br />
-          <Field name="query" component="input" type="text"/>
+          <Field name="query" component="input" type="text" placeholder="by keyword" />
+          <Field name="location" component="input" type="text" placeholder="by location" />
         </div>
         <button type="submit">Submit</button>
       </form>
