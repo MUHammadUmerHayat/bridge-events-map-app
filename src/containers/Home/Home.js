@@ -31,10 +31,12 @@ class Home extends React.Component {
   }
 
   render() {
-    if (this.props.events) {
+    if (this.props.events.length > 0) {
       return (
         <div>
-        <EventsMap markers={this.props.markers} currentLocation={this.props.currentLocation} handleMarkerClick={this.props.handleMarkerClick}/>
+        {this.props.currentLocation.lat ?
+          <EventsMap markers={this.props.markers} currentLocation={this.props.currentLocation} handleMarkerClick={this.props.handleMarkerClick}/> :
+        'Loading map' }
         <EventsList events={this.props.events} />
       </div>
       );
@@ -63,7 +65,8 @@ Home.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    events: state.events.event,
+    events: state.events.allEvents,
+    recommndedEvents: state.events.recommndedEvents,
     markers: state.markers,
     currentLocation: state.currentLocation,
   };

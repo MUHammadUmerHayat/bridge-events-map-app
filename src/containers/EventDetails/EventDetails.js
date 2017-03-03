@@ -29,7 +29,7 @@ class EventDetails extends Component {
         page_size: 3,
         category: nextProps.details.categories.category[0].id,
         venue_id: nextProps.details.venue_id,
-      });
+      }, true);
     }
   }
 
@@ -42,7 +42,7 @@ class EventDetails extends Component {
     };
     let recommended = null;
     if (this.props.events) {
-      recommended = <RecommendedEvents events={this.props.events} />;
+      recommended = <RecommendedEvents recommendedEvents={this.props.recommendedEvents} />;
     }
     if (this.props.details) {
       return (
@@ -75,18 +75,22 @@ EventDetails.propTypes = {
     venue_id: React.PropTypes.string,
   }),
   events: React.PropTypes.array,
+  recommendedEvents: React.PropTypes.array,
   addComment: React.PropTypes.func.isRequired,
   commentForm: React.PropTypes.object,
   resetForm: React.PropTypes.func,
   comments: React.PropTypes.array,
 };
 
-const mapStateToProps = state => ({
-  details: state.details,
-  events: state.events.event,
-  comments: state.comments,
-  commentForm: state.form.comment,
-});
+const mapStateToProps = state => {
+  return ({
+    details: state.details,
+    events: state.events.allEvents,
+    recommendedEvents: state.events.recommendedEvents,
+    comments: state.comments,
+    commentForm: state.form.comment,
+  });
+};
 
 const mapDispatchToProps = {
   loadEvents,
