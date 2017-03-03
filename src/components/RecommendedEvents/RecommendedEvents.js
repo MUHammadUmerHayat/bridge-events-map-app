@@ -9,7 +9,7 @@ export default function RecommendedEvents(props) {
       <h2>You might be interested in...</h2>
       <div style={styles.root}>
         <GridList style={styles.gridList} cols={2.2}>
-          {props.events.map((event, index) => (
+          {props.recommendedEvents.map((event, index) => (
             <Link key={index} to={'/EventDetails/' + event.id} >
               <GridTile
                 key={index}
@@ -57,7 +57,7 @@ const styles = {
 // http://api.eventful.com/json/categories/list?app_key=3RXRMbCtSm89nDRV
 
 RecommendedEvents.propTypes = {
-  events: React.PropTypes.array,
+  recommendedEvents: React.PropTypes.array,
   event: React.PropTypes.shape({
     image: React.PropTypes.shape({
       perspectivecrop290by250: React.PropTypes.shape({
