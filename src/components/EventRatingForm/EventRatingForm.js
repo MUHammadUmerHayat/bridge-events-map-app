@@ -3,10 +3,8 @@ import { Field, reduxForm } from 'redux-form';
 
 
 function EventRatingForm({handleAddRating}) {
-  // debugger;
   return (
     <form onSubmit={ handleAddRating }>
-      <label>Rating</label>
       <div>
         <label><Field name="rating" component="input" type="radio" value="1"/>1</label>
         <label><Field name="rating" component="input" type="radio" value="2"/>2</label>
@@ -14,7 +12,7 @@ function EventRatingForm({handleAddRating}) {
         <label><Field name="rating" component="input" type="radio" value="4"/>4</label>
         <label><Field name="rating" component="input" type="radio" value="5"/>5</label>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">Rate this Event!</button>
     </form>
   );
 }

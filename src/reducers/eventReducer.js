@@ -6,10 +6,8 @@ export default function eventReducer(state = {allEvents: [], recommendedEvents: 
   case types.ACTION_TYPES.LOAD_EVENTS_SUCCESS:
     return {...state, ...{allEvents: action.payload.events.event}};
 
-
   case types.ACTION_TYPES.LOAD_RECOMMENDED_EVENTS_SUCCESS:
     return {...state, ...{recommendedEvents: action.payload.events.event}};
-
 
   default:
     return state;
