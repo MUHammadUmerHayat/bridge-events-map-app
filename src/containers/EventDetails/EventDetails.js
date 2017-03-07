@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
-// Recommended Events
-import { loadEvents } from '../../actions/eventActions';
-import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEvents';
-
-// Event Details
+// Event details
 import EventDetailsComponent from '../../components/EventDetails/EventDetailsComponent';
 import { loadEventDetails } from '../../actions/eventDetailsActions';
 
-// Event Comments
+// Event comments
 import CommentForm from '../../components/CommentForm/CommentForm';
 import CommentList from '../../components/CommentList/CommentList';
 import { addComment } from '../../actions/commentActions';
 
-// Event ratings
-import EventRatingForm from '../../components/EventRatingForm/EventRatingForm';
-import { addEventRating } from '../../actions/eventRatingActions';
+// Recommended events
+import { loadEvents } from '../../actions/eventActions';
+import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEvents';
+
+// Event recommendation
+import RecommendButton from '../../components/RecommendButton/RecommendButton';
+import { recommendThisEvent } from '../../actions/eventRecommendationActions';
 
 
 class EventDetails extends Component {
@@ -45,16 +45,11 @@ class EventDetails extends Component {
   }
 
   render() {
-    const { commentForm, ratingForm } = this.props;
+    const { commentForm } = this.props;
     const handleCommentSubmit = e => {
       e.preventDefault();
       this.props.addComment(commentForm.values.commentTextarea);
       commentForm.values.commentTextarea = '';
-    };
-    const handleRatingSubmit = e => {
-      e.preventDefault();
-      this.props.addEventRating(ratingForm.values.rating);
-      // ratingForm.values.rating = '';
     };
     if (this.props.details) {
       return (
@@ -65,7 +60,7 @@ class EventDetails extends Component {
           />
           <CommentForm handleAddComment={ handleCommentSubmit }/>
           <CommentList comments={this.props.comments}/>
-          <EventRatingForm handleAddRating={ handleRatingSubmit } />
+          <RecommendButton increment={ this.props.recommendThisEvent } />
           {this.props.events ? <RecommendedEvents recommendedEvents={this.props.recommendedEvents} /> : null}
         </div>
       );
@@ -93,8 +88,8 @@ EventDetails.propTypes = {
   commentForm: React.PropTypes.object,
   resetForm: React.PropTypes.func,
   comments: React.PropTypes.array,
-  ratingForm: React.PropTypes.object,
-  addEventRating: React.PropTypes.func.isRequired,
+  recommendThisEvent: React.PropTypes.func.isRequired,
+  increment: React.PropTypes.func,
 
 };
 
@@ -105,7 +100,7 @@ const mapStateToProps = state => {
     recommendedEvents: state.events.recommendedEvents,
     comments: state.comments,
     commentForm: state.form.comment,
-    ratingForm: state.form.rating,
+    increment: state.recommendation,
   });
 };
 
@@ -113,7 +108,7 @@ const mapDispatchToProps = {
   loadEvents,
   loadEventDetails,
   addComment,
-  addEventRating,
+  recommendThisEvent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetails);
