@@ -29,6 +29,7 @@ class EventDetails extends Component {
         page_size: 3,
         category: nextProps.details.categories.category[0].id,
         venue_id: nextProps.details.venue_id,
+        include: 'categories',
       }, true);
     }
   }

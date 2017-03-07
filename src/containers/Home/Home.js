@@ -21,7 +21,9 @@ class Home extends React.Component {
         where: position,
         within: 25,
         date: 'Future',
-        page_size: '100',
+        page_size: '30',
+        image_sizes: 'block100,large',
+        include: 'categories',
       });
     }
 
