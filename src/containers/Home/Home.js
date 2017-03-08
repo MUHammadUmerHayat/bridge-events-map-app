@@ -6,6 +6,7 @@ import { getMarkersList, handleMarkerClick } from '../../actions/markersActions'
 import EventsMap from '../../components/EventsMap/EventsMap';
 import EventsList from '../../components/EventsList/EventsList';
 import CircularProgress from 'material-ui/CircularProgress';
+import EventSearch from '../../components/EventSearch/EventSearch';
 
 class Home extends React.Component {
   componentDidMount() {
@@ -42,6 +43,7 @@ class Home extends React.Component {
           {this.props.currentLocation.lat ?
             <EventsMap markers={this.props.markers} currentLocation={this.props.currentLocation} handleMarkerClick={this.props.handleMarkerClick}/> :
           'Loading map' }
+          <EventSearch searchForEvent={this.props.loadEvents}/>
           <EventsList events={this.props.events} />
         </div>
       </div>
