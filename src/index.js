@@ -13,6 +13,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import routes from './store/routes';
 import configureStore from './store/configure-store';
 import './styles/index.css';
+// import './styles/details.css';
 
 const store = configureStore({});
 const history = syncHistoryWithStore(browserHistory, store);

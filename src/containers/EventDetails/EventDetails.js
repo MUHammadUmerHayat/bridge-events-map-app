@@ -9,6 +9,7 @@ import { loadEventDetails } from '../../actions/eventDetailsActions';
 import CommentForm from '../../components/CommentForm/CommentForm';
 import CommentList from '../../components/CommentList/CommentList';
 import { addComment } from '../../actions/commentActions';
+import MainGoogleMap from '../../components/MainGoogleMap/MainGoogleMap';
 
 // Recommended events
 import { loadEvents } from '../../actions/eventActions';
@@ -16,6 +17,7 @@ import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEve
 
 // Event recommendation
 import RecommendButton from '../../components/RecommendButton/RecommendButton';
+import Recommendations from '../../components/Recommendations/Recommendations';
 import { recommendThisEvent } from '../../actions/eventRecommendationActions';
 
 
@@ -51,21 +53,44 @@ class EventDetails extends Component {
       this.props.addComment(commentForm.values.commentTextarea);
       commentForm.values.commentTextarea = '';
     };
-    if (this.props.details) {
-      return (
-        <div>
-          <EventDetailsComponent
-            title={this.props.details.title}
-            city={this.props.details.city}
-          />
-          <CommentForm handleAddComment={ handleCommentSubmit }/>
-          <CommentList comments={this.props.comments}/>
-          <RecommendButton increment={ this.props.recommendThisEvent } />
-          {this.props.events ? <RecommendedEvents recommendedEvents={this.props.recommendedEvents} /> : null}
-        </div>
-      );
+    let eventMarker;
+    let eventPosition;
+    if (this.props.details.latitude) {
+      eventPosition = {
+        lat: Number(this.props.details.latitude),
+        lng: Number(this.props.details.longitude),
+      };
+      eventMarker = [{
+        position: eventPosition,
+        key: 1,
+        defaultAnimation: 2,
+        showInfo: false,
+        title: this.props.details.title,
+        id: this.props.params.id,
+      }];
     }
-    return null;
+    return (
+      <div>
+        <EventDetailsComponent
+          title={this.props.details.title}
+          city={this.props.details.city}
+          imageUrl = {this.props.details.imageUrl}
+        />
+        <RecommendButton increment={ this.props.recommendThisEvent } />
+        <Recommendations amount={ this.props.increment } />
+        <div style={{width: '50%', height: '20%'}}>
+          <MainGoogleMap
+              containerElement={<div style={{ height: '100%' }} />}
+              mapElement={<div style={{ height: '300px' }} />}
+              markers={eventMarker}
+              currentLocation={eventPosition}
+          />
+        </div>
+        {this.props.events ? <RecommendedEvents recommendedEvents={this.props.recommendedEvents} /> : null}
+        <CommentForm handleAddComment={ handleCommentSubmit }/>
+        <CommentList comments={this.props.comments}/>
+      </div>
+    );
   }
 }
 
@@ -81,6 +106,9 @@ EventDetails.propTypes = {
     title: React.PropTypes.string,
     categories: React.PropTypes.obj,
     venue_id: React.PropTypes.string,
+    longitude: React.PropTypes.string,
+    latitude: React.PropTypes.string,
+    imageUrl: React.PropTypes.string,
   }),
   events: React.PropTypes.array,
   recommendedEvents: React.PropTypes.array,
@@ -89,7 +117,7 @@ EventDetails.propTypes = {
   resetForm: React.PropTypes.func,
   comments: React.PropTypes.array,
   recommendThisEvent: React.PropTypes.func.isRequired,
-  increment: React.PropTypes.func,
+  increment: React.PropTypes.number,
 
 };
 
@@ -100,7 +128,9 @@ const mapStateToProps = state => {
     recommendedEvents: state.events.recommendedEvents,
     comments: state.comments,
     commentForm: state.form.comment,
-    increment: state.recommendation,
+    increment: state.increment,
+    eventMarker: state.markers,
+    eventPosition: state.currentLocation,
   });
 };
 

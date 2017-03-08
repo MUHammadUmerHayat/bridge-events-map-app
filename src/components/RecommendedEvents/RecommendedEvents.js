@@ -1,56 +1,31 @@
 import React from 'react';
-import {GridList, GridTile} from 'material-ui/GridList';
+import {Card, CardMedia, CardTitle} from 'material-ui/Card';
 import EventImage from '../EventImage/EventImage';
 import {Link} from 'react-router';
 
 export default function RecommendedEvents(props) {
   return (
     <div>
-      <h2>You might be interested in...</h2>
-      <div style={styles.root}>
-        <GridList style={styles.gridList} cols={2.2}>
-          {props.recommendedEvents.map((event, index) => (
+      <h2>You might also be interested in...</h2>
+      {props.recommendedEvents.map((event, index) => (
+        <Card key={index} className="card" style={styles.card}>
+          <CardMedia>
             <Link key={index} to={'/EventDetails/' + event.id} >
-              <GridTile
-                key={index}
-                title={event.title}
-                cols={5}
-                style={styles.imageStyle}
-                titleStyle={styles.titleStyle}
-                titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-              >
-                <EventImage src={event.image.perspectivecrop290by250.url} />
-              </GridTile>
+              <EventImage src={event.image.perspectivecrop373by249.url} />
             </Link>
-          ))}
-        </GridList>
-      </div>
+          </CardMedia>
+          <CardTitle title={event.title} />
+          <CardTitle subtitle={event.start_time} />
+        </Card>
+      ))}
     </div>
   );
 }
 
 const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    height: '250px',
-  },
-  titleStyle: {
-    color: '#fff',
-  },
-  imageStyle: {
-    border: '1px solid #eee',
-    height: '250px',
-  },
-  pStyle: {
-    marginRight: '20px',
+  card: {
+    width: '33.33%',
+    float: 'left',
   },
 };
 
@@ -60,7 +35,7 @@ RecommendedEvents.propTypes = {
   recommendedEvents: React.PropTypes.array,
   event: React.PropTypes.shape({
     image: React.PropTypes.shape({
-      perspectivecrop290by250: React.PropTypes.shape({
+      perspectivecrop373by249: React.PropTypes.shape({
         url: React.PropTypes.string,
       }),
     }),
