@@ -4,8 +4,7 @@ import EventImage from '../EventImage/EventImage';
 export default function EventDetailsComponent({ title, city, imageUrl }) {
   return (
     <div>
-     <h1> Title: {title} </h1>
-     {imageUrl ? <EventImage src={imageUrl} height={'200px'} /> : ''}
+     <h1> Title: {title} {imageUrl ? <EventImage src={imageUrl} height={'60px'} /> : ''} </h1>
      <p> City: {city} </p>
     </div>
   );
