@@ -7,6 +7,7 @@ import EventDetailsComponent from '../../components/EventDetails/EventDetailsCom
 import CommentForm from '../../components/CommentForm/CommentForm';
 import CommentList from '../../components/CommentList/CommentList';
 import { addComment } from '../../actions/commentActions';
+import MainGoogleMap from '../../components/MainGoogleMap/MainGoogleMap';
 
 class EventDetails extends Component {
 
@@ -44,13 +45,33 @@ class EventDetails extends Component {
     if (this.props.events) {
       recommended = <RecommendedEvents recommendedEvents={this.props.recommendedEvents} />;
     }
-    if (this.props.details) {
+    if (this.props.details.latitude) {
+      const eventPosition = {
+        lat: Number(this.props.details.latitude),
+        lng: Number(this.props.details.longitude),
+      };
+      const eventMarker = [{
+        position: eventPosition,
+        key: 1,
+        defaultAnimation: 2,
+        showInfo: false,
+        title: this.props.details.title,
+        id: this.props.params.id,
+      }];
       return (
         <div>
           <EventDetailsComponent
             title={this.props.details.title}
             city={this.props.details.city}
           />
+          <div style={{width: '50%', height: '20%'}}>
+            <MainGoogleMap
+                containerElement={<div style={{ height: '100%' }} />}
+                mapElement={<div style={{ height: '300px' }} />}
+                markers={eventMarker}
+                currentLocation={eventPosition}
+            />
+          </div>
           <CommentForm handleAddComment={ handleCommentSubmit }/>
           <CommentList comments={this.props.comments}/>
           {recommended}
@@ -73,6 +94,8 @@ EventDetails.propTypes = {
     title: React.PropTypes.string,
     categories: React.PropTypes.obj,
     venue_id: React.PropTypes.string,
+    longitude: React.PropTypes.string,
+    latitude: React.PropTypes.string,
   }),
   events: React.PropTypes.array,
   recommendedEvents: React.PropTypes.array,
