@@ -13,7 +13,7 @@ const formatDate = (props) => {
   const year = date.getFullYear();
 
   return (
-        <div className="Left-indent grey">{`${day}  ${monthNames[monthIndex]} ${ year}`}</div>
+        <div style={{paddingTop: '5px'}}>{`${day}  ${monthNames[monthIndex]} ${ year}`}</div>
   );
 };
 

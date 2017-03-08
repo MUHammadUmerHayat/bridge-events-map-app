@@ -36,10 +36,14 @@ class Home extends React.Component {
     if (this.props.events.length > 0) {
       return (
         <div>
-        {this.props.currentLocation.lat ?
-          <EventsMap markers={this.props.markers} currentLocation={this.props.currentLocation} handleMarkerClick={this.props.handleMarkerClick}/> :
-        'Loading map' }
-        <EventsList events={this.props.events} />
+          <div style={{height: '50px', width: '100%', backgroundColor: '#00BCD4'}}/>
+          <div style={{width: '80%', margin: '0 auto'}}>
+          <h1 style={{margin: '0 auto', color: '#424242', textAlign: 'center', padding: '30px'}}>Things To Do In Your Area</h1>
+          {this.props.currentLocation.lat ?
+            <EventsMap markers={this.props.markers} currentLocation={this.props.currentLocation} handleMarkerClick={this.props.handleMarkerClick}/> :
+          'Loading map' }
+          <EventsList events={this.props.events} />
+        </div>
       </div>
       );
     }

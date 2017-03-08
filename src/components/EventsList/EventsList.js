@@ -1,5 +1,4 @@
 import React from 'react';
-// import {Link} from 'react-router';
 import EventItem from '../EventItem/EventItem';
 
 export default function EventsList({events}) {
@@ -11,7 +10,6 @@ export default function EventsList({events}) {
 
   return (
     <div>
-      <h1>Event List</h1>
       <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>{titleList}</div>
     </div>
   );
