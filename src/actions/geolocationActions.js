@@ -21,7 +21,7 @@ export function getCurrentGeoLocation() {
         dispatch(getCoordinates(latitude, longitude));
       });
     } else {
-      dispatch(getCoordinates('43.653226', '-79.383184'));
+      dispatch(getCoordinates(43.653226, -79.383184));
     }
   };
 }

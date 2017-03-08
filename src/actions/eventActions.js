@@ -33,7 +33,7 @@ export function loadEvents(param, isRecommended = false) {
           event.image.perspectivecrop290by250.url :
           event.image = {
             perspectivecrop290by250: {
-              url: '../../src/assets/img/' + param.category + '.jpg',
+              url: '../../src/assets/img/' + event.categories.category[0].id + '.jpg',
             },
           };
       });
