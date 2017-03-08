@@ -63,6 +63,7 @@ class EventDetails extends Component {
           <EventDetailsComponent
             title={this.props.details.title}
             city={this.props.details.city}
+            imageUrl = {this.props.details.imageUrl}
           />
           <div style={{width: '50%', height: '20%'}}>
             <MainGoogleMap
@@ -96,6 +97,7 @@ EventDetails.propTypes = {
     venue_id: React.PropTypes.string,
     longitude: React.PropTypes.string,
     latitude: React.PropTypes.string,
+    imageUrl: React.PropTypes.string,
   }),
   events: React.PropTypes.array,
   recommendedEvents: React.PropTypes.array,
