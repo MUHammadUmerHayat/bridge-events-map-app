@@ -28,6 +28,7 @@ class Search extends Component {
       location: values.location,
       page_size: '10',
       keywords: values.query,
+      include: 'categories',
     });
   }
 }
@@ -42,7 +43,7 @@ Search.propTypes = {
 const mapStateToProps = state => {
   return {
     query: state.query,
-    events: state.events.event,
+    events: state.events.allEvents,
   };
 };
 
