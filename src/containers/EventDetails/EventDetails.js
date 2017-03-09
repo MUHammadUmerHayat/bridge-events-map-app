@@ -42,6 +42,7 @@ class EventDetails extends Component {
         page_size: 3,
         category: nextProps.details.categories.category[0].id,
         venue_id: nextProps.details.venue_id,
+        include: 'categories',
       }, true);
     }
   }
@@ -71,24 +72,27 @@ class EventDetails extends Component {
     }
     return (
       <div>
-        <EventDetailsComponent
-          title={this.props.details.title}
-          city={this.props.details.city}
-          imageUrl = {this.props.details.imageUrl}
-        />
-        <RecommendButton increment={ this.props.recommendThisEvent } />
-        <Recommendations amount={ this.props.increment } />
-        <div style={{width: '50%', height: '20%'}}>
-          <MainGoogleMap
-              containerElement={<div style={{ height: '100%' }} />}
-              mapElement={<div style={{ height: '300px' }} />}
-              markers={eventMarker}
-              currentLocation={eventPosition}
+        <div style={{height: '50px', width: '100%', backgroundColor: '#00BCD4'}}/>
+        <div style={{width: '80%', margin: '0 auto'}}>
+          <EventDetailsComponent
+            title={this.props.details.title}
+            city={this.props.details.city}
+            imageUrl = {this.props.details.imageUrl}
           />
+          <RecommendButton increment={ this.props.recommendThisEvent } />
+          <Recommendations amount={ this.props.increment } />
+          <div style={{width: '50%', height: '20%'}}>
+            <MainGoogleMap
+                containerElement={<div style={{ height: '100%' }} />}
+                mapElement={<div style={{ height: '300px' }} />}
+                markers={eventMarker}
+                currentLocation={eventPosition}
+            />
+          </div>
+          {this.props.events ? <RecommendedEvents recommendedEvents={this.props.recommendedEvents} /> : null}
+          <CommentForm handleAddComment={ handleCommentSubmit }/>
+          <CommentList comments={this.props.comments}/>
         </div>
-        {this.props.events ? <RecommendedEvents recommendedEvents={this.props.recommendedEvents} /> : null}
-        <CommentForm handleAddComment={ handleCommentSubmit }/>
-        <CommentList comments={this.props.comments}/>
       </div>
     );
   }
