@@ -4,12 +4,12 @@ import {connect} from 'react-redux';
 // Event details
 import EventDetailsComponent from '../../components/EventDetails/EventDetailsComponent';
 import { loadEventDetails } from '../../actions/eventDetailsActions';
+import MainGoogleMap from '../../components/MainGoogleMap/MainGoogleMap';
 
 // Event comments
 import CommentForm from '../../components/CommentForm/CommentForm';
 import CommentList from '../../components/CommentList/CommentList';
 import { addComment } from '../../actions/commentActions';
-import MainGoogleMap from '../../components/MainGoogleMap/MainGoogleMap';
 
 // Recommended events
 import { loadEvents } from '../../actions/eventActions';
@@ -54,14 +54,12 @@ class EventDetails extends Component {
       this.props.addComment(commentForm.values.commentTextarea);
       commentForm.values.commentTextarea = '';
     };
-    let eventMarker;
-    let eventPosition;
     if (this.props.details.latitude) {
-      eventPosition = {
+      const eventPosition = {
         lat: Number(this.props.details.latitude),
         lng: Number(this.props.details.longitude),
       };
-      eventMarker = [{
+      const eventMarker = [{
         position: eventPosition,
         key: 1,
         defaultAnimation: 2,
@@ -69,34 +67,74 @@ class EventDetails extends Component {
         title: this.props.details.title,
         id: this.props.params.id,
       }];
-    }
-    return (
-      <div>
-        <div style={{height: '50px', width: '100%', backgroundColor: '#00BCD4'}}/>
-        <div style={{width: '80%', margin: '0 auto'}}>
-          <EventDetailsComponent
-            title={this.props.details.title}
-            city={this.props.details.city}
-            imageUrl = {this.props.details.imageUrl}
-          />
-          <RecommendButton increment={ this.props.recommendThisEvent } />
-          <Recommendations amount={ this.props.increment } />
-          <div style={{width: '50%', height: '20%'}}>
-            <MainGoogleMap
-                containerElement={<div style={{ height: '100%' }} />}
-                mapElement={<div style={{ height: '300px' }} />}
-                markers={eventMarker}
-                currentLocation={eventPosition}
+      return (
+        <div>
+          <div style={styles.menubar}/>
+          <div style={styles.container}>
+            <EventDetailsComponent
+              title={this.props.details.title}
+              city={this.props.details.city}
+              imageUrl = {this.props.details.imageUrl}
             />
+            <div style={styles.recommendations}>
+              <RecommendButton increment={ this.props.recommendThisEvent } />
+              <Recommendations amount={ this.props.increment} />
+            </div>
+            <div style={styles.map}>
+              <MainGoogleMap
+                  containerElement={<div style={{ height: '100%' }} />}
+                  mapElement={<div style={{ height: '300px' }} />}
+                  markers={eventMarker}
+                  currentLocation={eventPosition}
+              />
+            </div>
+            <div style={styles.hr} />
+            <div style={styles.comments}>
+              <CommentForm handleAddComment={ handleCommentSubmit }/>
+              <CommentList comments={this.props.comments}/>
+            </div>
+            <div style={styles.hr} />
+            {this.props.events ? <RecommendedEvents recommendedEvents={this.props.recommendedEvents} /> : null}
           </div>
-          {this.props.events ? <RecommendedEvents recommendedEvents={this.props.recommendedEvents} /> : null}
-          <CommentForm handleAddComment={ handleCommentSubmit }/>
-          <CommentList comments={this.props.comments}/>
         </div>
-      </div>
-    );
+      );
+    }
+    return null;
   }
 }
+
+const styles = {
+  menubar: {
+    height: '50px',
+    width: '100%',
+    backgroundColor: '#00BCD4',
+  },
+  container: {
+    width: '80%',
+    margin: '0 auto',
+  },
+  map: {
+    width: '50%',
+    height: '20%',
+    float: 'right',
+    marginBottom: '50px',
+  },
+  hr: {
+    height: '1px',
+    width: '100%',
+    backgroundColor: '#ddd',
+    clear: 'both',
+  },
+  comments: {
+    clear: 'both',
+    margin: '50px 0',
+  },
+  recommendations: {
+    float: 'left',
+    padding: '20px',
+  },
+};
+
 
 EventDetails.propTypes = {
   params: React.PropTypes.shape({

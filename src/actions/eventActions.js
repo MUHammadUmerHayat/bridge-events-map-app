@@ -28,7 +28,6 @@ export function loadEvents(param, isRecommended = false) {
   return function loadAllEvents(dispatch) {
     get('events/search', Object.assign({}, param, imageSizes))
     .then(response => {
-      console.log('hii');
       response.events.event.map(event => {
         event.image ?
           event.image.perspectivecrop373by249.url :

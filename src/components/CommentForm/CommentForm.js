@@ -3,10 +3,12 @@ import { Field, reduxForm } from 'redux-form';
 
 function CommentForm({handleAddComment}) {
   return (
-    <form onSubmit={ handleAddComment }>
-      <Field name="commentTextarea" component="input" type="text" placeholder="Leave a comment" />
-      <button type="submit">Submit</button>
-    </form>
+  	<div>
+	    <form onSubmit={ handleAddComment }>
+	      <Field name="commentTextarea" component="input" type="text" placeholder="Leave a comment" />
+	      <button type="submit">Submit</button>
+	    </form>
+    </div>
   );
 }
 

@@ -7,10 +7,8 @@ function CommentsList({comments}) {
   const reviewBlock = (commentsList.length > 0 ? commentsList : 'No reviews yet. Be the first one to review!');
 
   return (
-    <div>
-      <h4>Reviews</h4>
+    <div style={{margin: '30px 0'}}>
       {reviewBlock}
-      <hr/>
     </div>
   );
 }

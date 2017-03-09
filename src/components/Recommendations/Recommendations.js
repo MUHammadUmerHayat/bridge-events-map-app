@@ -1,9 +1,8 @@
 import React from 'react';
 
 export default function Recommendations(props) {
-  // console.log(props.amount);
   return (
-    <p>{props.amount} people recommend this event.</p>
+    <p>{props.amount} {props.amount === 1 ? 'person recommends' : 'people recommend'} this event.</p>
   );
 }
 
