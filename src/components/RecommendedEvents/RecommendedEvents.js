@@ -1,56 +1,51 @@
 import React from 'react';
-import {GridList, GridTile} from 'material-ui/GridList';
-import EventImage from '../EventImage/EventImage';
+import {Card, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
+import DateFormat from '../DateFormat/DateFormat';
 import {Link} from 'react-router';
 
 export default function RecommendedEvents(props) {
   return (
     <div>
-      <h2>You might be interested in...</h2>
-      <div style={styles.root}>
-        <GridList style={styles.gridList} cols={2.2}>
-          {props.recommendedEvents.map((event, index) => (
-            <Link key={index} to={'/EventDetails/' + event.id} >
-              <GridTile
-                key={index}
-                title={event.title}
-                cols={5}
-                style={styles.imageStyle}
-                titleStyle={styles.titleStyle}
-                titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+      <h3 style={styles.title}>More events happening nearby</h3>
+      <div style={styles.flex}>
+        {props.recommendedEvents.map((event, index) => (
+          <Link key={index} style={{textDecoration: 'none'}} to={'/EventDetails/' + event.id}>
+            <Card style={styles.card}>
+              <CardHeader
+                title={event.venue_name}
+                subtitle={<DateFormat pubDate={event.start_time} />}
+              />
+              <CardMedia
+                overlay={<CardTitle title={event.title}/>}
               >
-                <EventImage src={event.image.perspectivecrop290by250.url} />
-              </GridTile>
-            </Link>
-          ))}
-        </GridList>
+               <img src={event.image.perspectivecrop373by249.url} style={{height: '236px'}}/>
+              </CardMedia>
+            </Card>
+          </Link>
+        ))}
       </div>
     </div>
   );
 }
 
 const styles = {
-  root: {
+  title: {
+    margin: '0 auto',
+    color: '#424242',
+    textAlign: 'center',
+    padding: '30px 0 20px 0',
+  },
+  flex: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  gridList: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflowX: 'auto',
-    overflowY: 'hidden',
-    height: '250px',
-  },
-  titleStyle: {
-    color: '#fff',
-  },
-  imageStyle: {
-    border: '1px solid #eee',
-    height: '250px',
-  },
-  pStyle: {
-    marginRight: '20px',
+  card: {
+    width: '280px',
+    margin: '20px',
+    height: '306px',
+    marginBottom: '50px',
   },
 };
 
@@ -60,7 +55,7 @@ RecommendedEvents.propTypes = {
   recommendedEvents: React.PropTypes.array,
   event: React.PropTypes.shape({
     image: React.PropTypes.shape({
-      perspectivecrop290by250: React.PropTypes.shape({
+      perspectivecrop373by249: React.PropTypes.shape({
         url: React.PropTypes.string,
       }),
     }),
