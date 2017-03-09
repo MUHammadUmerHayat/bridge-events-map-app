@@ -23,16 +23,16 @@ export function loadRecommendedEventsSuccess(events) {
 export function loadEvents(param, isRecommended = false) {
   // add image sizes you would like to have access to here
   const imageSizes = {
-    image_sizes: 'perspectivecrop290by250',
+    image_sizes: 'perspectivecrop373by249',
   };
   return function loadAllEvents(dispatch) {
     get('events/search', Object.assign({}, param, imageSizes))
     .then(response => {
       response.events.event.map(event => {
         event.image ?
-          event.image.perspectivecrop290by250.url :
+          event.image.perspectivecrop373by249.url :
           event.image = {
-            perspectivecrop290by250: {
+            perspectivecrop373by249: {
               url: '../../src/assets/img/' + event.categories.category[0].id + '.jpg',
             },
           };

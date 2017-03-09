@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { loadEventDetails } from '../../actions/eventDetailsActions';
-import { loadEvents } from '../../actions/eventActions';
-import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEvents';
+
+// Event details
 import EventDetailsComponent from '../../components/EventDetails/EventDetailsComponent';
+import { loadEventDetails } from '../../actions/eventDetailsActions';
+import MainGoogleMap from '../../components/MainGoogleMap/MainGoogleMap';
+
+// Event comments
 import CommentForm from '../../components/CommentForm/CommentForm';
 import CommentList from '../../components/CommentList/CommentList';
 import { addComment } from '../../actions/commentActions';
-import MainGoogleMap from '../../components/MainGoogleMap/MainGoogleMap';
+
+// Recommended events
+import { loadEvents } from '../../actions/eventActions';
+import RecommendedEvents from '../../components/RecommendedEvents/RecommendedEvents';
+
+// Event recommendation
+import RecommendButton from '../../components/RecommendButton/RecommendButton';
+import Recommendations from '../../components/Recommendations/Recommendations';
+import { recommendThisEvent } from '../../actions/eventRecommendationActions';
+
 
 class EventDetails extends Component {
 
@@ -42,10 +54,6 @@ class EventDetails extends Component {
       this.props.addComment(commentForm.values.commentTextarea);
       commentForm.values.commentTextarea = '';
     };
-    let recommended = null;
-    if (this.props.events) {
-      recommended = <RecommendedEvents recommendedEvents={this.props.recommendedEvents} />;
-    }
     if (this.props.details.latitude) {
       const eventPosition = {
         lat: Number(this.props.details.latitude),
@@ -61,28 +69,72 @@ class EventDetails extends Component {
       }];
       return (
         <div>
-          <EventDetailsComponent
-            title={this.props.details.title}
-            city={this.props.details.city}
-            imageUrl = {this.props.details.imageUrl}
-          />
-          <div style={{width: '50%', height: '20%'}}>
-            <MainGoogleMap
-                containerElement={<div style={{ height: '100%' }} />}
-                mapElement={<div style={{ height: '300px' }} />}
-                markers={eventMarker}
-                currentLocation={eventPosition}
+          <div style={styles.menubar}/>
+          <div style={styles.container}>
+            <EventDetailsComponent
+              title={this.props.details.title}
+              city={this.props.details.city}
+              imageUrl = {this.props.details.imageUrl}
             />
+            <div style={styles.recommendations}>
+              <RecommendButton increment={ this.props.recommendThisEvent } />
+              <Recommendations amount={ this.props.increment} />
+            </div>
+            <div style={styles.map}>
+              <MainGoogleMap
+                  containerElement={<div style={{ height: '100%' }} />}
+                  mapElement={<div style={{ height: '300px' }} />}
+                  markers={eventMarker}
+                  currentLocation={eventPosition}
+              />
+            </div>
+            <div style={styles.hr} />
+            <div style={styles.comments}>
+              <CommentForm handleAddComment={ handleCommentSubmit }/>
+              <CommentList comments={this.props.comments}/>
+            </div>
+            <div style={styles.hr} />
+            {this.props.events ? <RecommendedEvents recommendedEvents={this.props.recommendedEvents} /> : null}
           </div>
-          <CommentForm handleAddComment={ handleCommentSubmit }/>
-          <CommentList comments={this.props.comments}/>
-          {recommended}
         </div>
       );
     }
     return null;
   }
 }
+
+const styles = {
+  menubar: {
+    height: '50px',
+    width: '100%',
+    backgroundColor: '#00BCD4',
+  },
+  container: {
+    width: '80%',
+    margin: '0 auto',
+  },
+  map: {
+    width: '50%',
+    height: '20%',
+    float: 'right',
+    marginBottom: '50px',
+  },
+  hr: {
+    height: '1px',
+    width: '100%',
+    backgroundColor: '#ddd',
+    clear: 'both',
+  },
+  comments: {
+    clear: 'both',
+    margin: '50px 0',
+  },
+  recommendations: {
+    float: 'left',
+    padding: '20px',
+  },
+};
+
 
 EventDetails.propTypes = {
   params: React.PropTypes.shape({
@@ -106,6 +158,9 @@ EventDetails.propTypes = {
   commentForm: React.PropTypes.object,
   resetForm: React.PropTypes.func,
   comments: React.PropTypes.array,
+  recommendThisEvent: React.PropTypes.func.isRequired,
+  increment: React.PropTypes.number,
+
 };
 
 const mapStateToProps = state => {
@@ -115,6 +170,9 @@ const mapStateToProps = state => {
     recommendedEvents: state.events.recommendedEvents,
     comments: state.comments,
     commentForm: state.form.comment,
+    increment: state.increment,
+    eventMarker: state.markers,
+    eventPosition: state.currentLocation,
   });
 };
 
@@ -122,6 +180,7 @@ const mapDispatchToProps = {
   loadEvents,
   loadEventDetails,
   addComment,
+  recommendThisEvent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetails);

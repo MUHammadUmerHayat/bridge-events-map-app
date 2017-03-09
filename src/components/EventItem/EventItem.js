@@ -14,7 +14,7 @@ export default function EventItem({event}) {
       <CardMedia
         overlay={<CardTitle title={event.title}/>}
       >
-      <img src={event.image.perspectivecrop290by250.url} style={{height: '276px'}}/>
+      <img src={event.image.perspectivecrop373by249.url} style={{height: '276px'}}/>
       </CardMedia>
      </Card>
     </Link>

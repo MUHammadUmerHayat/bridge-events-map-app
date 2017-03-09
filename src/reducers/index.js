@@ -7,6 +7,7 @@ import geolocationReducer from './geolocationReducer';
 import markersReducer from './markersReducer';
 import searchReducer from './searchReducer';
 import commentReducer from './commentReducer';
+import recommendIncrementReducer from './recommendIncrementReducer';
 
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   markers: markersReducer,
   searchReducer: searchReducer,
   comments: commentReducer,
+  increment: recommendIncrementReducer,
 });
 
 export default rootReducer;
