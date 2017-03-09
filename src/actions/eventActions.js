@@ -31,11 +31,11 @@ export function loadEvents(param, isRecommended = false) {
       response.events.event.map(event => {
         event.image ?
           event.image.perspectivecrop290by250.url :
-          event.image = {
-            perspectivecrop290by250: {
-              url: '../../src/assets/img/' + event.categories.category[0].id + '.jpg',
-            },
-          };
+            event.image = {
+              perspectivecrop290by250: {
+                url: '../../src/assets/img/' + event.categories.category[0].id + '.jpg',
+              },
+            };
       });
       dispatch(isRecommended ? loadRecommendedEventsSuccess(response.events) : loadEventsSuccess(response.events));
     }).catch(error => {
