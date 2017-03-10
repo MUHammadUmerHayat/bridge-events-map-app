@@ -89,6 +89,7 @@ class EventDetails extends Component {
               title={this.props.details.title}
               city={this.props.details.city}
               imageUrl = {this.props.details.imageUrl}
+              description = {this.props.details.description}
             />
             <div style={styles.recommendations}>
               <RecommendButton increment={ this.props.recommendThisEvent } />
@@ -161,6 +162,7 @@ EventDetails.propTypes = {
     city: React.PropTypes.string,
     title: React.PropTypes.string,
     categories: React.PropTypes.obj,
+    description: React.PropTypes.string,
     venue_id: React.PropTypes.string,
     longitude: React.PropTypes.string,
     latitude: React.PropTypes.string,
